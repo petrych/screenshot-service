@@ -20,6 +20,7 @@ Application stores screenshots in a dedicated directory which is located in the 
 # 2. Run
 
 2.1. In terminal navigate to the project directory.
+
 2.2. Execute the application using Maven:
   ```
   $ mvn thorntail:run
