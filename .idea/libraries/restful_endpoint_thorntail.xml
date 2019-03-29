@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="restful-endpoint-thorntail">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/target/restful-endpoint-thorntail.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
