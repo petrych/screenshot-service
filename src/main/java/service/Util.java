@@ -55,9 +55,10 @@ public class Util {
   
   public static String createFileName(String urlString) {
     String fileName = urlString.replaceFirst("^(http[s]?://www\\.|http[s]?://|www\\.)","");
-    fileName = fileName.replaceAll("/$", "");
-    fileName = fileName.replaceAll("\\W", "-");
-    
+    fileName = fileName.replaceAll("\\W|_", "-");
+    fileName = fileName.replaceAll("-{2,}", "-");
+    fileName = fileName.replaceAll("-$", "");
+
     return fileName;
   }
 
