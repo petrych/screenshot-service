@@ -1,9 +1,15 @@
-package service;
+package db;
+
+import service.Screenshot;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
+/*
+* The Data Access Object provides access to an underlying persistence storage.
+*
+* Acts as a database, is a folder in the project root directory.
+*/
 public enum ScreenshotDao {
     instance;
 
