@@ -17,6 +17,9 @@ The version of Chrome Driver must correspond to the Chrome browser installed.
 Download from https://sites.google.com/a/chromium.org/chromedriver/downloads.
  */
 public class Util {
+
+    public static final String SCREENSHOTS_STORAGE = "storage";
+
   public static String saveScreenshot(String urlString) {
       //
       // Installation
@@ -42,7 +45,7 @@ public class Util {
   
   
   public static String createFilePath(String fileName) {
-    String dirName = "screenshots";
+    String dirName = SCREENSHOTS_STORAGE;
     File dir = new File(dirName);
     if (!dir.exists()) dir.mkdirs();
     

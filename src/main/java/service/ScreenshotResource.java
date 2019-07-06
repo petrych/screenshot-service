@@ -45,7 +45,7 @@ public class ScreenshotResource {
             throw new RuntimeException("Get: Screenshot with id " + id +  " not found");
         
         String fileName = screenshot.getName();
-        File file = new File("screenshots/" + fileName);
+        File file = new File(Util.SCREENSHOTS_STORAGE + "/" + fileName);
         return Response.ok(file, "image/png").header("Screenshot ", "filename=\"" + file.getName() + "\"")
                 .build();
     }
