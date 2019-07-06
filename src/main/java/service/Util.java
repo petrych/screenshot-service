@@ -18,7 +18,7 @@ Download from https://sites.google.com/a/chromium.org/chromedriver/downloads.
  */
 public class Util {
 
-    public static final String SCREENSHOTS_STORAGE = "storage";
+    private static final String STORAGE_DIR = "storage";
 
   public static String saveScreenshot(String urlString) {
       //
@@ -45,7 +45,7 @@ public class Util {
   
   
   public static String createFilePath(String fileName) {
-    String dirName = SCREENSHOTS_STORAGE;
+    String dirName = getStorageDir();
     File dir = new File(dirName);
     if (!dir.exists()) dir.mkdirs();
     
@@ -54,11 +54,15 @@ public class Util {
   
   
   public static String createFileName(String urlString) {
-    urlString = urlString.replaceFirst("^(http[s]?://www\\.|http[s]?://|www\\.)","");
-    urlString = urlString.replaceAll("/$", "");
-    urlString = urlString.replaceAll("\\W", "-");
+    String fileName = urlString.replaceFirst("^(http[s]?://www\\.|http[s]?://|www\\.)","");
+    fileName = fileName.replaceAll("/$", "");
+    fileName = fileName.replaceAll("\\W", "-");
     
-    return urlString;
+    return fileName;
+  }
+
+  public static final String getStorageDir() {
+      return STORAGE_DIR;
   }
   
 }
