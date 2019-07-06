@@ -63,7 +63,7 @@ public class ScreenshotsResource {
                         @FormParam("name") String name,
                         @Context HttpServletResponse servletResponse) throws IOException {
     
-        String fileName = createFileName(name);
+        String fileName = Util.createFileName(name);
         Screenshot screenshot = new Screenshot(id, fileName);
         
         ScreenshotDao.instance.getModel().put(id, screenshot);
@@ -78,15 +78,6 @@ public class ScreenshotsResource {
     @Path("{screenshot}")
     public ScreenshotResource getScreenshot(@PathParam("screenshot") String id) {
         return new ScreenshotResource(uriInfo, request, id);
-    }
-    
-    
-    public static String createFileName(String urlString) {
-        urlString = urlString.replaceFirst("^(http[s]?://www\\.|http[s]?://|www\\.)","");
-        urlString = urlString.replaceAll("/$", "");
-        urlString = urlString.replaceAll("\\W", "-");
-        
-        return urlString + ".png";
     }
     
 }
