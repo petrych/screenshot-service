@@ -1,6 +1,6 @@
-package service;
+package com.petrych.service;
 
-import db.ScreenshotDao;
+import com.petrych.db.ScreenshotDao;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;

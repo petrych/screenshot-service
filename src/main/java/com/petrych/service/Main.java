@@ -1,4 +1,4 @@
-package service;
+package com.petrych.service;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

@@ -1,4 +1,4 @@
-package client;
+package com.petrych.client;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;

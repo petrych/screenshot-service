@@ -1,6 +1,6 @@
-package db;
+package com.petrych.db;
 
-import service.Screenshot;
+import com.petrych.service.Screenshot;
 
 import java.util.HashMap;
 import java.util.Map;

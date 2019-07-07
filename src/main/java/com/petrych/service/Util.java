@@ -1,4 +1,4 @@
-package service;
+package com.petrych.service;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

@@ -1,4 +1,4 @@
-package service;
+package com.petrych.service;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
