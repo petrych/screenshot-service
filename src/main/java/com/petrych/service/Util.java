@@ -18,27 +18,29 @@ Download from https://sites.google.com/a/chromium.org/chromedriver/downloads.
  */
 public class Util {
 
+    // Directory with screenshots
     private static final String STORAGE_DIR = "storage";
+    // Directory with Chromedriver
+    private static final String TOOLS_DIR = "tools";
+    private static final String IMAGE_FORMAT_NAME = "png";
 
   public static String saveScreenshot(String urlString) {
-      //
-      // Installation
-      System.setProperty("webdriver.chrome.driver", "chromedriver");
+      System.setProperty("webdriver.chrome.driver", TOOLS_DIR + File.separatorChar + "chromedriver");
       WebDriver driver = new ChromeDriver();
       driver.get(urlString);
       new WebDriverWait(driver, 15);
       ru.yandex.qatools.ashot.Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(100)).takeScreenshot(driver);
 
-      String fileName = createFileName(urlString); // new
-      String filePath = createFilePath(fileName) + ".png";
-      File file = new File(filePath);
+      String fileName = createFileName(urlString);
+      String fileNameWithFormat = createFilePath(fileName) + "." + IMAGE_FORMAT_NAME;
+      File file = new File(fileNameWithFormat);
       try {
-          ImageIO.write(screenshot.getImage(), "PNG", file);
+          ImageIO.write(screenshot.getImage(), IMAGE_FORMAT_NAME, file);
       } catch (IOException e) {
           e.printStackTrace();
       }
 
-      driver.close();
+      driver.quit();
       
       return fileName;
   }
