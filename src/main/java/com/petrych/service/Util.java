@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 import javax.imageio.ImageIO;
@@ -29,7 +30,7 @@ public class Util {
       WebDriver driver = new ChromeDriver();
       driver.get(urlString);
       new WebDriverWait(driver, 15);
-      ru.yandex.qatools.ashot.Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(100)).takeScreenshot(driver);
+      Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(100)).takeScreenshot(driver);
 
       String fileName = createFileName(urlString);
       String fileNameWithFormat = createFilePath(fileName) + "." + IMAGE_FORMAT_NAME;
@@ -37,6 +38,7 @@ public class Util {
       try {
           ImageIO.write(screenshot.getImage(), IMAGE_FORMAT_NAME, file);
       } catch (IOException e) {
+          // TODO - Should the exception really be caught? Or thrown further?
           e.printStackTrace();
       }
 
