@@ -1,4 +1,4 @@
-package service.client;
+package client;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
