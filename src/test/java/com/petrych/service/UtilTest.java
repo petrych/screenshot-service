@@ -7,15 +7,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UtilTest {
 
-    private static final String URL_REAL = "https://www.apple.com/";
-    private static final String URL_TEST_TWO = "https://stackoverflow.com/questions/115983/-§±!@#$%^&*()-_=+[]{};:'|\n,<?";
-    private static final String URL_TEST_THREE = "www.site.com";
+    private static final String URL_ONE = "https://github.blog/2019-06-26-noops-week-§±!@#$%^&*()-_=+[]{};:'|\n,<?";
+    private static final String URL_TWO = "https://stackoverflow.com/questions/115983/";
+    private static final String URL_THREE = "www.site.com";
 
 
     @ParameterizedTest
-    @ValueSource(strings = { URL_REAL, URL_TEST_TWO, URL_TEST_THREE })
+    @ValueSource(strings = { URL_ONE, URL_TWO, URL_THREE })
     public void createFileName(String argument) {
         String fileName = Util.createFileName(argument);
+        System.out.println(argument);
 
         // File name doesn't start with "http(s)" and "www"
         assertFalse(fileName.matches("^(http[s]?://www\\.|http[s]?://|www\\.).*"));
