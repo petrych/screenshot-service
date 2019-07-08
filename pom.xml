@@ -49,6 +49,13 @@
       <version>2.53.1</version>
     </dependency>
 
+    <!-- Solves NoClassDefFoundError: org/openqa/selenium/WebDriver -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-api</artifactId>
+      <version>3.14.0</version>
+    </dependency>
+
     <dependency>
       <groupId>ru.yandex.qatools.ashot</groupId>
       <artifactId>ashot</artifactId>
