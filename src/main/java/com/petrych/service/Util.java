@@ -25,6 +25,10 @@ public class Util {
     private static final String TOOLS_DIR = "tools";
     private static final String IMAGE_FORMAT_NAME = "png";
 
+    private Util() {
+        throw new IllegalStateException("Instantiating utility class.");
+    }
+
   public static String saveScreenshot(String urlString) {
       System.setProperty("webdriver.chrome.driver", TOOLS_DIR + File.separatorChar + "chromedriver");
       WebDriver driver = new ChromeDriver();

@@ -39,7 +39,7 @@ public class ScreenshotsResource {
     @GET
     @Produces(MediaType.TEXT_XML)
     public List<Screenshot> getScreenshotsBrowser() {
-        List<Screenshot> screenshots = new ArrayList<Screenshot>();
+        List<Screenshot> screenshots = new ArrayList<>();
         screenshots.addAll(ScreenshotDao.instance.getModel().values());
         return screenshots;
     }
