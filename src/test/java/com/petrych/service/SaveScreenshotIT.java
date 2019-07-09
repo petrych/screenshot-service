@@ -15,7 +15,7 @@ public class SaveScreenshotIT {
     private static final String URL_REAL = "https://www.apple.com/";
 
     @Test
-    public void saveScreenshot() {
+    public void saveScreenshot() throws Exception {
         String fileName = Util.saveScreenshot(URL_REAL);
 
         assertFalse(fileName.isEmpty(), "File name of a created screenshot is empty.");
