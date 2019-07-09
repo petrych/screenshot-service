@@ -51,12 +51,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-api</artifactId>
-      <version>${version.selenium}</version>
-    </dependency>
-
-    <dependency>
       <groupId>ru.yandex.qatools.ashot</groupId>
       <artifactId>ashot</artifactId>
       <version>1.5.4</version>
