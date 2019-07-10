@@ -1,5 +1,6 @@
 package com.petrych.service;
 
+import com.petrych.util.ScreenshotServiceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -25,11 +26,10 @@ public class Util {
     private static final String TOOLS_DIR = "tools";
     private static final String IMAGE_FORMAT_NAME = "png";
 
-    private Util() {
-        throw new IllegalStateException("Instantiating utility class.");
-    }
+    private Util() {}
 
-  public static String saveScreenshot(String urlString) {
+  public static String saveScreenshot(String urlString) throws ScreenshotServiceException
+  {
       System.setProperty("webdriver.chrome.driver", TOOLS_DIR + File.separatorChar + "chromedriver");
       WebDriver driver = new ChromeDriver();
       driver.get(urlString);
@@ -42,8 +42,8 @@ public class Util {
       try {
           ImageIO.write(screenshot.getImage(), IMAGE_FORMAT_NAME, file);
       } catch (IOException e) {
-          // TODO - Should the exception really be caught? Or thrown further?
-          e.printStackTrace();
+          String message = String.format("Couldn't write a file '%s'", fileNameWithFormat);
+          throw new ScreenshotServiceException(message, e);
       }
 
       driver.quit();
