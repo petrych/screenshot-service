@@ -3,13 +3,15 @@
 <Properties>
     <Property name="logPath">target/log4j2-logs</Property>
     <Property name="rollingFileName">screenshot-service</Property>
+    <Property name="pattern">%d %-5level [%c] (%t) - %m%n</Property>
+
 </Properties>
 <Appenders>
     <Console name="console" target="SYSTEM_OUT">
-        <PatternLayout pattern="[%highlight{%-5level}] %d{DEFAULT} %c{1}.%M() - %msg%n%throwable{short.lineNumber}" />
+        <PatternLayout pattern="${pattern}" />
     </Console>
     <RollingFile name="rollingFile" fileName="${logPath}/${rollingFileName}.log" filePattern="${logPath}/${rollingFileName}_%d{yyyy-MM-dd}.log">
-        <PatternLayout pattern="[%highlight{%-5level}] %d{DEFAULT} %c{1}.%M() - %msg%n%throwable{short.lineNumber}" />
+        <PatternLayout pattern="${pattern}" />
         <Policies>
             <!-- Causes a rollover if the log file is older than the current JVM's start time -->
             <OnStartupTriggeringPolicy />
