@@ -30,10 +30,7 @@ public class Util {
 
   public static String saveScreenshot(String urlString) throws ScreenshotServiceException
   {
-      System.setProperty("webdriver.chrome.driver", TOOLS_DIR + File.separatorChar + "chromedriver");
-      WebDriver driver = new ChromeDriver();
-      driver.get(urlString);
-      new WebDriverWait(driver, 15);
+      WebDriver driver = getWebDriver(urlString);
       Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(100)).takeScreenshot(driver);
 
       String fileName = createFileName(urlString);
@@ -52,10 +49,19 @@ public class Util {
   }
   
   
+  private static WebDriver getWebDriver(String urlString)
+  {
+      System.setProperty("webdriver.chrome.driver", TOOLS_DIR + File.separatorChar + "chromedriver");
+      WebDriver driver = new ChromeDriver();
+      driver.get(urlString);
+      new WebDriverWait(driver, 15);
+      
+      return driver;
+  }
+  
+  
   public static String createFilePath(String fileName) {
     String dirName = getStorageDir();
-    File dir = new File(dirName);
-    if (!dir.exists()) dir.mkdirs();
     
     return dirName + File.separatorChar + fileName;
   }
@@ -71,6 +77,9 @@ public class Util {
   }
 
   public static final String getStorageDir() {
+      File dir = new File(STORAGE_DIR);
+      if (!dir.exists()) dir.mkdirs();
+      
       return STORAGE_DIR;
   }
   

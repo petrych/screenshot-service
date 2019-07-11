@@ -12,11 +12,7 @@ public class FileUtil {
   
     private static Logger logger = LoggerFactory.getLogger(FileUtil.class);
   
-    private FileUtil() {
-        String errorMessage = "Instantiating utility class is not allowed.";
-        logger.error(errorMessage);
-        throw new IllegalStateException(errorMessage);
-    }
+    private FileUtil() {}
 
     
     public static boolean fileExists(String dirName, String fileName) {
@@ -32,8 +28,7 @@ public class FileUtil {
     }
 
 
-    public static void removeFile(String dirName, String fileName) throws IOException
-    {
+    public static void removeFile(String dirName, String fileName) throws IOException {
         File[] dirContent = getDirContent(dirName);
         for (File file : dirContent) {
             if (file.getName().contains(fileName)) {

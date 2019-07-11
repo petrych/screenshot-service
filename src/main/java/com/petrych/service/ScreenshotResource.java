@@ -26,16 +26,6 @@ public class ScreenshotResource {
         this.id = id;
     }
     
-
-    // for the browser
-//    @GET
-//    @Produces(MediaType.TEXT_XML)
-//    public Screenshot getScreenshotHTML() {
-//        Screenshot screenshot = ScreenshotDao.instance.getModel().get(id);
-//        if(screenshot == null)
-//            throw new RuntimeException("Get: Screenshot with id " + id +  " not found");
-//        return screenshot;
-//    }
     
     @GET
     @Produces("image/png")
@@ -45,7 +35,7 @@ public class ScreenshotResource {
             throw new RuntimeException("Get: Screenshot with id " + id +  " not found");
         
         String fileName = screenshot.getName();
-        File file = new File(Util.getStorageDir() + "/" + fileName);
+        File file = new File(Util.getStorageDir() + File.separatorChar + fileName);
         return Response.ok(file, "image/png").header("Screenshot ", "filename=\"" + file.getName() + "\"")
                 .build();
     }
