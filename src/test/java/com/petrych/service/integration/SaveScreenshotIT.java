@@ -1,4 +1,4 @@
-package com.petrych.service;
+package com.petrych.service.integration;
 
 import com.petrych.util.FileUtil;
 import com.petrych.util.Util;
