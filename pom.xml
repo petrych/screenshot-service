@@ -81,11 +81,13 @@
       <artifactId>log4j-api</artifactId>
       <version>${version.log4j}</version>
     </dependency>
+
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
       <version>${version.log4j}</version>
     </dependency>
+
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-slf4j-impl</artifactId>
@@ -112,6 +114,7 @@
   <build>
 
     <finalName>restful-endpoint</finalName>
+
     <plugins>
       <plugin>
         <groupId>io.thorntail</groupId>
@@ -125,8 +128,37 @@
           </execution>
         </executions>
       </plugin>
+
+      <!-- testing -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M3</version>
+      </plugin>
     </plugins>
 
   </build>
+
+  <profiles>
+    <profile>
+      <id>failsafe</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>3.0.0-M3</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
