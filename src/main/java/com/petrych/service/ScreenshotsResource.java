@@ -1,6 +1,7 @@
 package com.petrych.service;
 
 import com.petrych.db.ScreenshotDao;
+import com.petrych.util.Util;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
