@@ -9,12 +9,13 @@ import java.nio.file.Files;
 
 
 public class FileUtil {
-  
-    private static Logger logger = LoggerFactory.getLogger(FileUtil.class);
-  
-    private FileUtil() {}
 
-    
+    private static Logger logger = LoggerFactory.getLogger(FileUtil.class);
+
+    private FileUtil() {
+    }
+
+
     public static boolean fileExists(String dirName, String fileName) {
         File[] dirContent = getDirContent(dirName);
         for (File file : dirContent) {
@@ -43,7 +44,7 @@ public class FileUtil {
         File dir = new File(dirName);
         File[] dirContent = dir.listFiles();
         logger.debug("Successfully retrieved the list of files in the directory '{}'.", dirName);
-        
+
         return dirContent;
     }
 }
