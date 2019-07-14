@@ -38,24 +38,24 @@ public class ScreenshotResource {
     @GET
     @Produces("image/png")
     public Response getScreenshot() {
-        Screenshot screenshot;
-        String fileName;
+        String screenshotName;
         Response r;
 
         try {
-            screenshot = ScreenshotDao.instance.getModel().get(id);
-            fileName = screenshot.getName();
+            Screenshot screenshot = ScreenshotDao.instance.getModel().get(id);
+            screenshotName = screenshot.getName();
         } catch (NullPointerException e) {
-            logger.debug("Id {} does not exist.", String.valueOf(id));
+            logger.debug("Id {} not found.", String.valueOf(id));
             return Response.status(Status.NOT_FOUND).build();
         }
 
-        boolean fileExists = FileUtil.fileExists(Util.getStorageDir(), fileName);
+        boolean fileExists = FileUtil.fileExists(Util.getStorageDir(), screenshotName);
 
         if (fileExists) {
-            File file = new File(Util.getStorageDir() + File.separatorChar + fileName);
+            File file = new File(Util.getStorageDir() + File.separatorChar + screenshotName);
             r = Response.ok(file, "image/png").build();
         } else {
+            logger.debug("Screenshot '{}' not found.", screenshotName);
             r = Response.status(Status.NOT_FOUND).build();
         }
 
