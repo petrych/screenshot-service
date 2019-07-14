@@ -1,17 +1,17 @@
 package com.petrych.service;
 
 import com.petrych.db.ScreenshotDao;
+import com.petrych.util.ScreenshotServiceException;
 import com.petrych.util.Util;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
+import javax.ws.rs.core.Response.Status;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 
 // Maps the resource to the URL screenshots
@@ -28,13 +28,26 @@ public class ScreenshotsResource {
     @Context
     Request request;
 
+    private static final Logger logger = LogManager.getLogger(ScreenshotResource.class);
+
+
     // Returns the list of screenshots to the user in the browser
     @GET
-    @Produces(MediaType.TEXT_XML)
-    public List<Screenshot> getScreenshotsBrowser() {
-        List<Screenshot> screenshots = new ArrayList<>();
-        screenshots.addAll(ScreenshotDao.instance.getModel().values());
-        return screenshots;
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllScreenshots() {
+        Map<String, Screenshot> screenshotsMap;
+        try {
+            screenshotsMap = ScreenshotDao.instance.getModel();
+        } catch (NullPointerException npe) {
+            String message = "Database can't be accessed.";
+            logger.error(message, new ScreenshotServiceException(message, npe));
+
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(message).build();
+        }
+
+        logger.debug("Total screenshots: {}.", screenshotsMap.size());
+
+        return Response.status(Status.OK).entity(screenshotsMap).build();
     }
 
 
@@ -44,9 +57,19 @@ public class ScreenshotsResource {
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getCount() {
-        int count = ScreenshotDao.instance.getModel().size();
-        return String.valueOf(count);
+    public Response getCount() {
+        int count;
+        try {
+            count = ScreenshotDao.instance.getModel().size();
+        } catch (NullPointerException npe) {
+            String message = "Database can't be accessed.";
+            logger.error(message, npe);
+
+            return Response.status(Status.NOT_FOUND).entity(message).build();
+        }
+        logger.debug("Screenshots count: {}.", count);
+
+        return Response.status(Status.OK).entity(count).build();
     }
 
     @POST
