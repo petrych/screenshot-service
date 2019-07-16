@@ -2,7 +2,7 @@ package com.petrych.service;
 
 import com.petrych.db.DBAccessor;
 import com.petrych.util.FileUtil;
-import com.petrych.util.ScreenshotServiceException;
+import com.petrych.exception.ScreenshotServiceException;
 import com.petrych.util.Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,7 +44,7 @@ public class ScreenshotResource {
 
         Screenshot screenshot = DBAccessor.getScreenshotById(id);
         if (screenshot == null) {
-            LOGGER.debug("Id {} not found.", String.valueOf(id));
+            LOGGER.debug("Id {} not found", String.valueOf(id));
             return Response.status(Status.NOT_FOUND).build();
         }
 
@@ -55,7 +55,7 @@ public class ScreenshotResource {
             File file = new File(Util.getStorageDir() + File.separatorChar + screenshotName);
             return Response.ok(file, "image/png").build();
         } else {
-            LOGGER.debug("Screenshot '{}' not found.", screenshotName);
+            LOGGER.debug("Screenshot '{}' not found", screenshotName);
             return Response.status(Status.NOT_FOUND).build();
         }
     }

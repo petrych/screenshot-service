@@ -1,23 +1,27 @@
 package com.petrych.db;
 
+import com.petrych.exception.ScreenshotServiceException;
 import com.petrych.service.Screenshot;
-import com.petrych.util.ScreenshotServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
 
 public class DBAccessor {
 
+    private static final Logger LOGGER = LogManager.getLogger(DBAccessor.class);
 
-    public DBAccessor() {
+
+    private DBAccessor() {
     }
 
 
     public enum DBStatus {
 
-        INTERNAL_DB_ERROR(500, "Database can not be accessed."),
-        NO_CONTENT(204, "Database has no items."),
-        OK(200, "Database status is OK.");
+        INTERNAL_DB_ERROR(500, "Database can not be accessed"),
+        NO_CONTENT(204, "Database has no items"),
+        OK(200, "Database status is OK");
 
         private final int statusCode;
         private final String message;
@@ -44,9 +48,13 @@ public class DBAccessor {
 
         Map<String, Screenshot> screenshotsProvider = ScreenshotDao.instance.getModel();
         if (screenshotsProvider == null) {
-            throw new ScreenshotServiceException(DBStatus.INTERNAL_DB_ERROR.getMessage());
+            String message = DBStatus.INTERNAL_DB_ERROR.getMessage();
+            LOGGER.fatal(message);
+            throw new ScreenshotServiceException(message, DBStatus.INTERNAL_DB_ERROR);
         } else if (screenshotsProvider.isEmpty()) {
-            throw new ScreenshotServiceException(DBStatus.NO_CONTENT.getMessage());
+            String message = DBStatus.NO_CONTENT.getMessage();
+            LOGGER.warn(message);
+            throw new ScreenshotServiceException(message, DBStatus.NO_CONTENT);
         } else {
             return screenshotsProvider;
         }

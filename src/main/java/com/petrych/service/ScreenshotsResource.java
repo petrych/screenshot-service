@@ -1,7 +1,7 @@
 package com.petrych.service;
 
 import com.petrych.db.DBAccessor;
-import com.petrych.util.ScreenshotServiceException;
+import com.petrych.exception.ScreenshotServiceException;
 import com.petrych.util.Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,7 +39,7 @@ public class ScreenshotsResource {
     public Response getAllScreenshots() throws ScreenshotServiceException {
 
         Map<String, Screenshot> screenshotsProvider = DBAccessor.getAllScreenshots();
-        logger.debug("{}. Total screenshots: {}.", DBStatus.OK.getMessage(), screenshotsProvider.size());
+        logger.debug("{}. Total screenshots: {}", DBStatus.OK.getMessage(), screenshotsProvider.size());
 
         return Response.status(Status.OK).entity(screenshotsProvider).build();
     }
@@ -54,7 +54,7 @@ public class ScreenshotsResource {
     public Response getScreenshotsCount() throws ScreenshotServiceException {
 
         int count = DBAccessor.getScreenshotsCount();
-        logger.debug("Screenshots count: {}.", count);
+        logger.debug("Screenshots count: {}", count);
 
         return Response.status(Status.OK).entity(count).build();
     }
