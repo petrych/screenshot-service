@@ -2,6 +2,7 @@ package com.petrych.db;
 
 import com.petrych.service.Screenshot;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -13,7 +14,7 @@ public enum ScreenshotDao {
 
     instance;
 
-    private Map<String, Screenshot> contentProvider = null;//new HashMap<>();
+    private Map<String, Screenshot> contentProvider = new HashMap<>();
 
 
     ScreenshotDao() {
