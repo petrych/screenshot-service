@@ -1,6 +1,6 @@
 package com.petrych.exception;
 
-import com.petrych.db.DBAccessor.DBStatus;
+import com.petrych.db.DbStatus;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -15,12 +15,12 @@ public class ScreenshotServiceExceptionHandler implements ExceptionMapper<Screen
     @Override
     public Response toResponse(ScreenshotServiceException exception) {
 
-        DBStatus dbStatus = exception.getDbStatus();
+        DbStatus dbStatus = exception.getDbStatus();
         String exceptionMessage = exception.getMessage();
 
         if (dbStatus == null) {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(exceptionMessage).build();
-        } else if (dbStatus.equals(DBStatus.NO_CONTENT)) {
+        } else if (dbStatus.equals(DbStatus.NO_CONTENT)) {
             return Response.status(dbStatus.getStatusCode()).build();
         } else {
             return Response.status(dbStatus.getStatusCode()).entity(exceptionMessage).build();

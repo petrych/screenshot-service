@@ -1,6 +1,8 @@
 package com.petrych.service;
 
-import com.petrych.db.DBAccessor;
+import com.petrych.db.DbStatus;
+import com.petrych.db.LocalScreenshotGateway;
+import com.petrych.db.ScreenshotGateway;
 import com.petrych.exception.ScreenshotServiceException;
 import com.petrych.util.Util;
 import org.apache.logging.log4j.LogManager;
@@ -12,8 +14,6 @@ import javax.ws.rs.core.*;
 import javax.ws.rs.core.Response.Status;
 import java.io.IOException;
 import java.util.Map;
-
-import static com.petrych.db.DBAccessor.DBStatus;
 
 
 // Maps the resource to the URL screenshots
@@ -32,14 +32,15 @@ public class ScreenshotsResource {
 
     private static final Logger logger = LogManager.getLogger(ScreenshotResource.class);
 
+    private ScreenshotGateway screenshotGateway = new LocalScreenshotGateway();
 
     // Returns the list of screenshots to the user in the browser
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllScreenshots() throws ScreenshotServiceException {
 
-        Map<String, Screenshot> screenshotsProvider = DBAccessor.getAllScreenshots();
-        logger.debug("{}. Total screenshots: {}", DBStatus.OK.getMessage(), screenshotsProvider.size());
+        Map<String, Screenshot> screenshotsProvider = screenshotGateway.getAllScreenshots();
+        logger.debug("{}. Total screenshots: {}", DbStatus.OK.getMessage(), screenshotsProvider.size());
 
         return Response.status(Status.OK).entity(screenshotsProvider).build();
     }
@@ -53,7 +54,7 @@ public class ScreenshotsResource {
     @Produces(MediaType.TEXT_PLAIN)
     public Response getScreenshotsCount() throws ScreenshotServiceException {
 
-        int count = DBAccessor.getScreenshotsCount();
+        int count = screenshotGateway.getScreenshotsCount();
         logger.debug("Screenshots count: {}", count);
 
         return Response.status(Status.OK).entity(count).build();
@@ -69,7 +70,7 @@ public class ScreenshotsResource {
 
         String fileName = Util.createFileName(name);
         Screenshot screenshot = new Screenshot(id, fileName);
-        DBAccessor.getAllScreenshots().put(id, screenshot);
+        screenshotGateway.getAllScreenshots().put(id, screenshot);
         servletResponse.sendRedirect("../create_screenshot.html");
     }
 
@@ -77,8 +78,8 @@ public class ScreenshotsResource {
     // treated as a parameter and passed to the ScreenshotResources
     // Allows to type http://localhost:8080/screenshots/1
     // 1 will be treaded as parameter screenshot and passed to ScreenshotResource
-    @Path("{screenshot}")
-    public ScreenshotResource getScreenshot(@PathParam("screenshot") String id) {
+    @Path("{id}")
+    public ScreenshotResource getScreenshot(@PathParam("id") String id) {
 
         return new ScreenshotResource(uriInfo, request, id);
     }
