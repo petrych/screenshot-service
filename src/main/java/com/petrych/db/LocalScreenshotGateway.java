@@ -5,10 +5,13 @@ import com.petrych.service.Screenshot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.util.Map;
 
 public class LocalScreenshotGateway implements ScreenshotGateway {
 
+    // Directory with screenshots
+    private static final String STORAGE_DIR = "storage";
     private static final Logger LOGGER = LogManager.getLogger(LocalScreenshotGateway.class);
     private Map<String, Screenshot> screenshotsProvider;
 
@@ -17,6 +20,14 @@ public class LocalScreenshotGateway implements ScreenshotGateway {
         screenshotsProvider = ScreenshotDao.instance.getModel();
     }
 
+
+    @Override
+    public String getScreenshotStorageDir() {
+        File dir = new File(STORAGE_DIR);
+        if (!dir.exists()) dir.mkdirs();
+
+        return STORAGE_DIR;
+    }
 
     @Override
     public Map<String, Screenshot> getAllScreenshots() throws ScreenshotServiceException {

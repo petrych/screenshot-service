@@ -1,5 +1,6 @@
 package com.petrych.util;
 
+import com.petrych.db.LocalScreenshotGateway;
 import com.petrych.exception.ScreenshotServiceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,8 +21,6 @@ Download from https://sites.google.com/a/chromium.org/chromedriver/downloads.
  */
 public class Util {
 
-    // Directory with screenshots
-    private static final String STORAGE_DIR = "storage";
     // Directory with Chromedriver
     private static final String TOOLS_DIR = "tools";
     private static final String IMAGE_FORMAT_NAME = "png";
@@ -60,7 +59,7 @@ public class Util {
 
 
     public static String createFilePath(String fileName) {
-        String dirName = getStorageDir();
+        String dirName = new LocalScreenshotGateway().getScreenshotStorageDir();
 
         return dirName + File.separatorChar + fileName;
     }
@@ -73,13 +72,6 @@ public class Util {
         fileName = fileName.replaceAll("-$", "");
 
         return fileName;
-    }
-
-    public static final String getStorageDir() {
-        File dir = new File(STORAGE_DIR);
-        if (!dir.exists()) dir.mkdirs();
-
-        return STORAGE_DIR;
     }
 
 }
