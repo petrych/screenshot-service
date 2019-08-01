@@ -4,7 +4,6 @@ import com.petrych.db.LocalScreenshotGateway;
 import com.petrych.db.ScreenshotGateway;
 import com.petrych.exception.ScreenshotServiceException;
 import com.petrych.util.FileUtil;
-import com.petrych.util.Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -52,10 +51,10 @@ public class ScreenshotResource {
         }
 
         String screenshotName = screenshot.getName();
-        boolean fileExists = FileUtil.fileExists(Util.getStorageDir(), screenshotName);
+        boolean fileExists = FileUtil.fileExists(FileUtil.getStorageDir(screenshotGateway), screenshotName);
 
         if (fileExists) {
-            File file = new File(Util.getStorageDir() + File.separatorChar + screenshotName);
+            File file = new File(FileUtil.getStorageDir(screenshotGateway) + File.separatorChar + screenshotName);
             return Response.ok(file, "image/png").build();
         } else {
             LOGGER.debug("Screenshot '{}' not found", screenshotName);

@@ -1,5 +1,6 @@
 package com.petrych.util;
 
+import com.petrych.db.ScreenshotGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,5 +47,9 @@ public class FileUtil {
         logger.debug("Successfully retrieved the list of files in the directory '{}'.", dirName);
 
         return dirContent;
+    }
+
+    public static String getStorageDir(ScreenshotGateway sg) {
+        return sg.getScreenshotStorageDir();
     }
 }
