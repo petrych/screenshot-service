@@ -1,13 +1,13 @@
 package com.petrych.exception;
 
-import com.petrych.db.DBAccessor.DBStatus;
+import com.petrych.db.DbStatus;
 
 
 public class ScreenshotServiceException extends Exception {
 
-    private DBStatus dbStatus;
+    private DbStatus dbStatus;
 
-    public DBStatus getDbStatus() {
+    public DbStatus getDbStatus() {
         return this.dbStatus;
     }
 
@@ -17,7 +17,7 @@ public class ScreenshotServiceException extends Exception {
     }
 
 
-    public ScreenshotServiceException(String message, DBStatus dbStatus) {
+    public ScreenshotServiceException(String message, DbStatus dbStatus) {
 
         super(message);
         this.dbStatus = dbStatus;

@@ -1,5 +1,6 @@
 package com.petrych.util;
 
+import com.petrych.db.ScreenshotGateway;
 import com.petrych.exception.ScreenshotServiceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,8 +21,6 @@ Download from https://sites.google.com/a/chromium.org/chromedriver/downloads.
  */
 public class Util {
 
-    // Directory with screenshots
-    private static final String STORAGE_DIR = "storage";
     // Directory with Chromedriver
     private static final String TOOLS_DIR = "tools";
     private static final String IMAGE_FORMAT_NAME = "png";
@@ -29,12 +28,12 @@ public class Util {
     private Util() {
     }
 
-    public static String saveScreenshot(String urlString) throws ScreenshotServiceException {
+    public static String saveScreenshot(ScreenshotGateway screenshotGateway, String urlString) throws ScreenshotServiceException {
         WebDriver driver = getWebDriver(urlString);
         Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(100)).takeScreenshot(driver);
 
         String fileName = createFileName(urlString);
-        String fileNameWithFormat = createFilePath(fileName) + "." + IMAGE_FORMAT_NAME;
+        String fileNameWithFormat = createFilePath(screenshotGateway, fileName) + "." + IMAGE_FORMAT_NAME;
         File file = new File(fileNameWithFormat);
         try {
             ImageIO.write(screenshot.getImage(), IMAGE_FORMAT_NAME, file);
@@ -59,8 +58,8 @@ public class Util {
     }
 
 
-    public static String createFilePath(String fileName) {
-        String dirName = getStorageDir();
+    public static String createFilePath(ScreenshotGateway sg, String fileName) {
+        String dirName = sg.getScreenshotStorageDir();
 
         return dirName + File.separatorChar + fileName;
     }
@@ -73,13 +72,6 @@ public class Util {
         fileName = fileName.replaceAll("-$", "");
 
         return fileName;
-    }
-
-    public static final String getStorageDir() {
-        File dir = new File(STORAGE_DIR);
-        if (!dir.exists()) dir.mkdirs();
-
-        return STORAGE_DIR;
     }
 
 }

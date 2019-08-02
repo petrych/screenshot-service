@@ -1,9 +1,9 @@
 package com.petrych.service;
 
-import com.petrych.db.DBAccessor;
-import com.petrych.util.FileUtil;
+import com.petrych.db.LocalScreenshotGateway;
+import com.petrych.db.ScreenshotGateway;
 import com.petrych.exception.ScreenshotServiceException;
-import com.petrych.util.Util;
+import com.petrych.util.FileUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +29,8 @@ public class ScreenshotResource {
 
     private static final Logger LOGGER = LogManager.getLogger(ScreenshotResource.class);
 
+    private ScreenshotGateway screenshotGateway = new LocalScreenshotGateway();
+
 
     public ScreenshotResource(UriInfo uriInfo, Request request, String id) {
 
@@ -42,17 +44,17 @@ public class ScreenshotResource {
     @Produces("image/png")
     public Response getScreenshot() throws ScreenshotServiceException {
 
-        Screenshot screenshot = DBAccessor.getScreenshotById(id);
+        Screenshot screenshot = screenshotGateway.getScreenshotById(id);
         if (screenshot == null) {
             LOGGER.debug("Id {} not found", String.valueOf(id));
             return Response.status(Status.NOT_FOUND).build();
         }
 
         String screenshotName = screenshot.getName();
-        boolean fileExists = FileUtil.fileExists(Util.getStorageDir(), screenshotName);
+        boolean fileExists = FileUtil.fileExists(FileUtil.getStorageDir(screenshotGateway), screenshotName);
 
         if (fileExists) {
-            File file = new File(Util.getStorageDir() + File.separatorChar + screenshotName);
+            File file = new File(FileUtil.getStorageDir(screenshotGateway) + File.separatorChar + screenshotName);
             return Response.ok(file, "image/png").build();
         } else {
             LOGGER.debug("Screenshot '{}' not found", screenshotName);
