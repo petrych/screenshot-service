@@ -1,6 +1,7 @@
 package com.petrych.db;
 
 import com.petrych.service.Screenshot;
+import org.wildfly.common.annotation.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ public enum ScreenshotDao {
 
     instance;
 
+    @NotNull
     private Map<String, Screenshot> contentProvider = new HashMap<>();
 
 
