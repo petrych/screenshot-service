@@ -2,6 +2,7 @@ package com.petrych.util;
 
 import com.petrych.db.ScreenshotGateway;
 import com.petrych.exception.ScreenshotServiceException;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -24,6 +25,8 @@ public class Util {
     // Directory with Chromedriver
     private static final String TOOLS_DIR = "tools";
     private static final String IMAGE_FORMAT_NAME = "png";
+
+    private static UrlValidator urlValidatorDefault = new UrlValidator();
 
     private Util() {
     }
@@ -74,4 +77,8 @@ public class Util {
         return fileName;
     }
 
+    public static boolean isUrlValid(String urlString) {
+
+        return urlValidatorDefault.isValid(urlString);
+    }
 }
