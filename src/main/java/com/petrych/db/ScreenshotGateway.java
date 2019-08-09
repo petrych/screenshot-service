@@ -10,6 +10,8 @@ public interface ScreenshotGateway {
 
     String getScreenshotStorageDir();
 
+    String checkDbStatus() throws ScreenshotServiceException;
+
     Map<String, Screenshot> getAllScreenshots() throws ScreenshotServiceException;
 
     Screenshot getScreenshotById(String id) throws ScreenshotServiceException;

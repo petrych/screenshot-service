@@ -29,19 +29,28 @@ public class LocalScreenshotGateway implements ScreenshotGateway {
         return STORAGE_DIR;
     }
 
+
     @Override
-    public Map<String, Screenshot> getAllScreenshots() throws ScreenshotServiceException {
+    public String checkDbStatus() throws ScreenshotServiceException {
         if (screenshotsProvider == null) {
             String message = DbStatus.INTERNAL_DB_ERROR.getMessage();
             LOGGER.fatal(message);
             throw new ScreenshotServiceException(message, DbStatus.INTERNAL_DB_ERROR);
+
         } else if (screenshotsProvider.isEmpty()) {
             String message = DbStatus.NO_CONTENT.getMessage();
             LOGGER.warn(message);
             throw new ScreenshotServiceException(message, DbStatus.NO_CONTENT);
-        } else {
-            return screenshotsProvider;
         }
+
+        return DbStatus.OK.getMessage();
+    }
+
+
+    @Override
+    public Map<String, Screenshot> getAllScreenshots() throws ScreenshotServiceException {
+        checkDbStatus();
+        return screenshotsProvider;
     }
 
 
