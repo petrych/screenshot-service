@@ -61,11 +61,7 @@ public class LocalScreenshotGateway implements ScreenshotGateway {
     public Screenshot getScreenshotById(String id) throws ScreenshotServiceException {
 
         Map<String, Screenshot> screenshotsProvider = getAllScreenshots();
-        if (screenshotsProvider.containsKey(id)) {
-            return screenshotsProvider.get(id);
-        } else {
-            return null;
-        }
+        return screenshotsProvider.getOrDefault(id, null);
     }
 
 
